@@ -15,11 +15,13 @@ RUN \
   mkdir /$WM_PKG_NAME && mv $WM_PKG_NAME-$WM_VERSION-standalone.jar /$WM_PKG_NAME/$WM_PKG_NAME.jar
 
 # Define mountable directories.
-VOLUME ["/data"]
+VOLUME ["/wiremock/__files", "/wiremock/mappings"]
+
+WORKDIR /wiremock
 
 # Define default command.
-# CMD ["java -jar /wiremock/wiremock.jar"]
-ENTRYPOINT ["java", "-jar", "/wiremock/wiremock.jar"]
+ENTRYPOINT exec java -jar wiremock.jar
+# ENTRYPOINT pwd && ls -la
 
 # Expose ports.
 #   - 8080: HTTP
