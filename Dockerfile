@@ -7,7 +7,7 @@
 FROM dockerfile/java:oracle-java8
 
 ENV WM_PKG_NAME wiremock
-ENV WM_VERSION 1.52
+ENV WM_VERSION 1.53
 
 RUN \
   cd / && \
