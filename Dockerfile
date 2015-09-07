@@ -4,10 +4,10 @@
 #
 
 # Pull base image.
-FROM dockerfile/java:oracle-java8
+FROM java:8
 
 ENV WM_PKG_NAME wiremock
-ENV WM_VERSION 1.53
+ENV WM_VERSION 1.57
 
 RUN \
   cd / && \
