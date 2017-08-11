@@ -7,27 +7,21 @@
 FROM openjdk:8-alpine
 
 ENV WM_PKG_NAME wiremock-standalone
-ENV WM_VERSION 2.6.0
+ENV WM_VERSION 2.7.1
 
-RUN apk --no-cache --virtual .build-dependencies add wget \
-    && apk --no-cache --upgrade add ca-certificates \
+RUN apk --no-cache --upgrade add ca-certificates \
+    && apk --no-cache --virtual .build-dependencies add wget \
     && update-ca-certificates --fresh \
-    && cd / \
-    && wget https://repo1.maven.org/maven2/com/github/tomakehurst/$WM_PKG_NAME/$WM_VERSION/$WM_PKG_NAME-$WM_VERSION.jar \
     && mkdir -p /opt/wiremock/ \
-    && apk del .build-dependencies \
-    && mv $WM_PKG_NAME-$WM_VERSION.jar /opt/wiremock/wiremock.jar
+    && wget https://repo1.maven.org/maven2/com/github/tomakehurst/$WM_PKG_NAME/$WM_VERSION/$WM_PKG_NAME-$WM_VERSION.jar --progress=bar:force:noscroll -O /opt/wiremock/wiremock.jar \
+    && apk del .build-dependencies
 
 # Define mountable directories.
 VOLUME ["/wiremock/__files", "/wiremock/mappings"]
 
 WORKDIR /wiremock
 
-# Define default command.
-ENTRYPOINT exec java -jar /opt/wiremock/wiremock.jar
-# ENTRYPOINT pwd && ls -la
-
-# Expose ports.
-#   - 8080: HTTP
 EXPOSE 8080
 
+# Define default command.
+ENTRYPOINT ["exec", "java", "-jar", "/opt/wiremock/wiremock.jar"]
