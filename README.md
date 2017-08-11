@@ -5,7 +5,7 @@ Wiremock Dockerfile for wiremock Docker builds.
 
 ### Installation
 
-1.You can build an image from Dockerfile: `docker build -t="carlosroman/wiremock" github.com/carlosroman/docker-wiremock`
+You can install the image from Docker Hub by running: `docker pull carlosroman/wiremock`
 
 ### Usage
 ```
