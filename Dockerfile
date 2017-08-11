@@ -4,7 +4,7 @@
 #
 
 # Pull base image.
-FROM openjdk:8-alpine
+FROM openjdk:8-jre-alpine
 
 ENV WM_PKG_NAME wiremock-standalone
 ENV WM_VERSION 2.7.1
@@ -24,4 +24,4 @@ WORKDIR /wiremock
 EXPOSE 8080
 
 # Define default command.
-ENTRYPOINT ["exec", "java", "-jar", "/opt/wiremock/wiremock.jar"]
+ENTRYPOINT ["java", "-jar", "/opt/wiremock/wiremock.jar"]
