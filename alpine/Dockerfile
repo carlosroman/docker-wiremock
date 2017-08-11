@@ -4,16 +4,17 @@
 #
 
 # Pull base image.
-FROM openjdk:8-jre-slim
+FROM openjdk:8-jre-alpine
 
 ENV WM_PKG_NAME wiremock-standalone
 ENV WM_VERSION 2.7.1
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget \
+RUN apk --no-cache --upgrade add ca-certificates \
+    && apk --no-cache --virtual .build-dependencies add wget \
     && update-ca-certificates --fresh \
     && mkdir -p /opt/wiremock/ \
     && wget https://repo1.maven.org/maven2/com/github/tomakehurst/$WM_PKG_NAME/$WM_VERSION/$WM_PKG_NAME-$WM_VERSION.jar --progress=bar:force:noscroll -O /opt/wiremock/wiremock.jar \
-    && rm -rf /var/lib/apt/lists/*
+    && apk del .build-dependencies
 
 # Define mountable directories.
 VOLUME ["/wiremock/__files", "/wiremock/mappings"]
